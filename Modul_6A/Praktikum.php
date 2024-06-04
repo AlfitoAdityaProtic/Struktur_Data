@@ -21,7 +21,6 @@ function LEmpty($head){
     }else{
         return 0;
     }
-    
 }
 
 //prosedur menyisipkan data ke dalam linked list (depan)

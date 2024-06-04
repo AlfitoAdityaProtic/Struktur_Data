@@ -3,7 +3,6 @@
 class node {
     public $data;
     public $next;
-    public $head;
 //Inisialisasi
 public function __construct($d){
     $this->data = $d;
