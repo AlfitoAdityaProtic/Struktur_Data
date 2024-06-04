@@ -23,10 +23,10 @@ class DLLCH
     }
     // fungsi untuk mengecek apakah link itu kosong atau tidak
     public function LEmpty()
-    {
+    { //jika kosong akan bernilai benar
         if ($this->head == null)
             return 1;
-        else
+        else //jika tidak kosong bernilai salah atau false
             return 0;
     }
     // fungsi untuk menambahkan data di depan link list
@@ -36,11 +36,11 @@ class DLLCH
         // $newNode->data = $d;
         // $newNode->next = $newNode;
         // $newNode->prev = $newNode;
-        if ($this->LEmpty()) {
+        if ($this->LEmpty()) { //kondisi jika awal link list kosong
             $this->head = $newNode;
             $this->head->next = $this->head;
             $this->head->prev = $this->head;
-        } else {
+        } else { //jika kondisi awal link list sudah ada isinya
             $temp = $this->head->prev;
             $newNode->next = $this->head;
             $this->head->prev = $newNode;
@@ -57,11 +57,11 @@ class DLLCH
         // $newNode->next = $newNode;
         // $newNode->prev = $newNode;
 
-        if ($this->LEmpty()) {
+        if ($this->LEmpty()) { //kondisi jika awal link list kosong
             $this->head = $newNode;
             $this->head->next = $this->head;
             $this->head->prev = $this->head;
-        } else {
+        } else {//jika kondisi awal link list sudah ada isinya
             $temp = $this->head->prev;
             $temp->next = $newNode;
             $newNode->prev = $temp;
@@ -72,11 +72,11 @@ class DLLCH
     // fungsi untuk menghapus data di depan link list
     public function HapusD()
     {
-        if (!$this->LEmpty()) 
+        if (!$this->LEmpty())
         {
-            if ($this->head->next == $this->head){
+            if ($this->head->next == $this->head){ //jika kondisi awal link list hanya terdapat 1 datanya saja
                 $this->head = null;
-            } else {
+            } else { //jika kondisi awal link list memiliki 2 data atau lebih maka akan menjalankan perintah berikut
                 $hapus = $this->head;
                 $temp = $hapus->prev;
                 $this->head = $this->head->next;
@@ -84,20 +84,20 @@ class DLLCH
                 $this->head->prev = $temp;
                 unset ($hapus);
             }
-        }else{
+        }else{ //jika kondisi awal link list kosong
             echo "<br>LIST Kosong";
         }
     }
     //fungsi untuk menghapus data di belakang link list
     public function HapusB(){
-        if ($this->head == null){
+        if ($this->head == null){ //jika kondisi awal link list kosong
             echo "Linked List Kosong\n";
             return;
         }
-        if ($this->head->next == $this->head){
+        if ($this->head->next == $this->head){ //jika kondisi awal link list berisi setidaknya 1 data
             $this->head = null;
             return;
-        }else{
+        }else{ //jika kondisi awal link list berisi 2 data atau lebih
             $hapus = $this->head->prev;
             $temp = $hapus->prev;
             $temp->next = $this->head;
@@ -109,25 +109,25 @@ class DLLCH
     // fungsi untuk menampilkan data double link list circular
     public function printList (){
         $current = $this->head;
-            if(!$this->LEmpty()){
-                do{
+            if(!$this->LEmpty()){//kondisi jika link list tidak kosong maka
+                do{ //mencetak link list satu persatu
                     echo $current->data . " ";
                     $current = $current->next;
                 }while ($current != $this->head);
-            }else{
+            }else{ //kondisi jika link list kosong
                 echo "<br>List Kosong";
             }
     }
 
     // fungsi untuk menghapus data double link list circular
     public function clear(){
-        if ($this->LEmpty()){
+        if ($this->LEmpty()){ //jika kondisi link list kosong
             echo "Link List kosong\n";
             return;
         }
         $temp = $this->head;
         $hapus = null;
-        do {
+        do { //akan menghapus isi link list satu per satu
             $hapus = $temp;
             $temp = $temp->next;
             unset ($hapus);
