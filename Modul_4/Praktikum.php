@@ -32,8 +32,8 @@ function inisial(){
 function push($d){
     global $A; //menggunakan variabel global $A
 
-    if($A['top'] != max - 1){
-        $A['top'] = $A['top'] + 1;
+    if($A['top'] != max - 1){ //apabila data tidak penuh
+        $A['top'] = $A['top'] + 1; //top saat ini dipindah ke urutan dibawahnya
         $A['data'][$A['top']] = $d; //menambahkan data ke dalam stack
         echo "<br/>Nilai ", $d, " Sudah ditambahkan"; //pesan konfirmasi penambahan
     } else {

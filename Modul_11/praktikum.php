@@ -99,6 +99,34 @@ class BinaryTree{
         if ($node->left == null && $node->right == null)
             echo $node->data, " ";
     }
+
+    private function cariNode ($node, $data){
+    if ($node == null)
+        return 0;
+    if ($node->data == $data)
+        return 1;
+    if ($data < $node->data){
+        return $this->cariNode($node->left, $data);
+    }else{
+        return $this->cariNode($node->right, $data);
+    }
+    }
+
+    public function cek($data){
+        if ($this->cari($data)){
+            echo "ditemukan";
+        }else{
+            echo "Tidak Ditemukan";
+        }
+    }
+
+    public function hitung($node){
+        if($node == null){
+            return 0;
+        }else{
+            return 1 + $this->hitung($node->left) + $this->hitung($node->right);
+        }
+    }
 }
 
 $tr = new BinaryTree();
@@ -109,9 +137,11 @@ $tr->insert(8);
 echo "Preorder : "; $tr->preorder($tr->root);
 echo "<br>Inorder : "; $tr->inorder($tr->root);
 echo "<br>Postorder : "; $tr->postorder($tr->root);
-$tr->cek(51);
-$tr->cek(33);
+echo "<br>Data 51 : "; $tr->cek(51);
+echo "<br>Data 33 : ";$tr->cek(33);
 echo "<br>Jumlah Node : ", $tr->hitung($tr->root);
 echo "<br>Kedalaman Level : ", $tr->tinggi($tr->root);
 echo "<br>Daun : ", $tr->daun($tr->root);
+
+var_dump($tr);
 ?>
