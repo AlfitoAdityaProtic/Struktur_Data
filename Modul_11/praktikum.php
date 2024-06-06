@@ -187,6 +187,4 @@ echo "<br>Jumlah Node : ", $tr->hitung($tr->root);
 echo "<br>Kedalaman Level : ", $tr->tinggi($tr->root);
 //menampilkan daun (node tanpa anak) di dalam tree
 echo "<br>Daun : ", $tr->daun($tr->root);
-
-var_dump($tr);
 ?>

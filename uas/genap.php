@@ -1,6 +1,7 @@
 <?php
 session_start();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,24 +12,25 @@ session_start();
 </head>
 
 <body>
-    <h3>+++++Single Link List Circular dengan HEAD dan TAIL+++++</h3><br><br>
-
-    <h3>MENU : </h3>
+    <h1>Single Linked List Circular Head Tail</h1>
+    <h3>Pilih Menu</h3>
     <ol>
-        <li><a href="?menu=insertD">TAMBAH DATA DI DEPAN</a></li>
-        <li><a href="?menu=insertB">TAMBAH DATA DI BELAKANG</a></li>
-        <li><a href="?menu=hapusD">HAPUS DATA DEPAN</a></li>
-        <li><a href="?menu=tampil">CETAK DATA</a></li>
+        <li><a href="?menu=insertD">Tambah Data di depan</a></li>
+        <li><a href="?menu=insertB">Tambah Data di belakang</a></li>
+        <li><a href="?menu=deleteD">Hapus Data di depan</a></li>
+        <li><a href="?menu=cetak">Cetak</a></li>
     </ol>
 </body>
 
 </html>
+
 <?php
+
 class Node
 {
     public $data;
     public $next;
-
+    // proses pembuatan node baru
     public function __construct($d)
     {
         $this->data = $d;
@@ -36,28 +38,27 @@ class Node
     }
 }
 
-class SLLCHT
+class SLLCH
 {
-    private $head,$tail;
     public function __construct()
     {
         $this->head = null;
         $this->tail = null;
     }
-
-    public function isEmpty()
+    // fungsi cek list empty
+    public function LEmpty()
     {
-        if ($this->head == null) {
+        if ($this->head === null) {
             return true;
         } else {
             return false;
         }
     }
-
+    //fungsi tambah data depan 
     public function insertD($d)
     {
         $newNode = new Node($d);
-        if ($this->isEmpty()) {
+        if ($this->LEmpty()) {
             $newNode->next = $newNode;
             $this->head = $newNode;
             $this->tail = $newNode;
@@ -67,11 +68,11 @@ class SLLCHT
             $this->head = $newNode;
         }
     }
-
+    //fungsi tambah data belakang
     public function insertB($d)
     {
         $newNode = new Node($d);
-        if ($this->isEmpty()) {
+        if ($this->LEmpty()) {
             $newNode->next = $newNode;
             $this->head = $newNode;
             $this->tail = $newNode;
@@ -80,12 +81,11 @@ class SLLCHT
             $this->tail->next = $newNode;
             $this->tail = $newNode;
         }
-
     }
-
-    public function hapusD()
+    //fungsi hapus data depan
+    public function deleteD()
     {
-        if (!$this->isEmpty()) {
+        if (!$this->LEmpty()) {
             if ($this->head->next === $this->head) {
                 $this->head = null;
                 $this->tail = null;
@@ -95,41 +95,41 @@ class SLLCHT
             }
         }
     }
-
-    public function tampil()
+    //fungsi cetak data
+    public function printList()
     {
-        if ($this->isEmpty()) {
-            echo "Maaf data Kosong <br>";
-            return;
+        if ($this->LEmpty()) {
+            echo "List kosong";
+        } else {
+            $temp = $this->head;
+            do {
+                echo $temp->data . " ";
+                $temp = $temp->next;
+            } while ($temp != $this->head);
         }
-        $temp = $this->head;
-        echo "isi Link List : <br>";
-        while ($temp->next !== $this->head) {
-            echo $temp->data . "<br>";
-            $temp = $temp->next;
-        }
-        echo $temp->data;
     }
 
 }
-
+//memasukan ke session
 if (!isset($_SESSION['list'])) {
-    $_SESSION['list'] = new SLLCHT();
+    $_SESSION['list'] = new SLLCH();
 }
 
-function deleteD()
+function hapusD()
 {
-    $_SESSION['list']->hapusD();
+    $_SESSION['list']->deleteD();
 }
 
 if (isset($_GET['menu'])) {
+
     $menu = $_GET['menu'];
+    //jika memilih menu pertama
     if ($menu == 'insertD') {
         ?>
-        <h3>Tambah Data di Depan</h3>
+        <h3>Tambah data di depan</h3>
         <form method="post">
-            <label for="">Masukan Data</label><br><br>
-            <input type="text" name="data" required><br><br>
+            <label>Masukkan data :</label>
+            <input type="text" name="data" required><br>
             <input type="submit" name="submit" value="Simpan Data">
         </form>
 
@@ -137,14 +137,16 @@ if (isset($_GET['menu'])) {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $data = $_POST['data'];
             $_SESSION['list']->insertD($data);
-            echo "<p>Data berhasil ditambahkan di depan</p>";
+            echo "<p>Data berhasil ditambahkan didepan.</p>";
         }
-    } elseif ($menu == "insertB") {
+    }
+    //perintah menu kedua
+    elseif ($menu == 'insertB') {
         ?>
-        <h3>Tambah Data di Belakang</h3>
+        <h3>Tambah data dibelakang</h3>
         <form method="post">
-            <label for="">Masukan Data : </label><br><br>
-            <input type="text" name="data" required><br><br>
+            <label>Masukkan data :</label>
+            <input type="text" name="data" required><br>
             <input type="submit" name="submit" value="Simpan Data">
         </form>
 
@@ -152,21 +154,23 @@ if (isset($_GET['menu'])) {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $data = $_POST['data'];
             $_SESSION['list']->insertB($data);
-            echo "<p>Data berhasil ditambahkan di Belakang</p>";
+            echo "<p>Data berhasil ditambahkan dibelakang.</p>";
         }
-    } elseif ($menu == "hapusD") {
+    }
+    //menu hapus depan
+    elseif ($menu == 'deleteD') {
         if (!empty($_SESSION['list'])) {
-            $_SESSION['list']->hapusD();
+            hapusD();
             echo "<p>Data pertama berhasil dihapus</p>";
         } else {
-            echo "<p>Data link list masih kosong</p>";
+            echo "<p>List masih kosong</p>";
         }
-    } elseif ($menu == "tampil") {
+    } elseif ($menu == 'cetak') {
         ?>
-        <h3>Daftar Data : </h3><br>
+        <h3>Daftar data :</h3>
         <table>
             <?php
-            $_SESSION['list']->tampil();
+            $_SESSION['list']->printList();
             ?>
         </table>
         <?php
